@@ -5,12 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const navLinks = document.querySelectorAll('nav a, .logo');
 
-    // Toggle menu
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
     });
 
-    // Close menu when a link is clicked (for mobile)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             sidebar.classList.remove('open');
@@ -23,17 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function navigateToHash() {
         const hash = window.location.hash || '#home';
         
-        // Hide all pages, remove active from all links
         pages.forEach(page => page.classList.remove('active'));
         navLinks.forEach(link => link.classList.remove('active'));
 
-        // Show target page
         const targetPage = document.querySelector(hash);
         if (targetPage) {
             targetPage.classList.add('active');
         }
 
-        // Highlight active link in the sidebar
         const activeLinks = document.querySelectorAll(`a[href="${hash}"]`);
         activeLinks.forEach(link => {
             if (!link.classList.contains('logo')) {
@@ -41,55 +36,111 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Scroll to top on page change
         window.scrollTo(0, 0);
     }
 
     window.addEventListener('hashchange', navigateToHash);
     navigateToHash();
 
-    // --- 3. Gallery Next/Prev Logic ---
-    const galleryContainers = document.querySelectorAll('.gallery-container');
+    // --- 3. Fetch Data & Build Website ---
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            buildProjects(data.projects);
+            buildBlog(data.blog);
+            initGalleries(); // Turn on the gallery buttons AFTER the images load
+        })
+        .catch(error => console.error('Error loading data:', error));
 
-    galleryContainers.forEach(container => {
-        const items = container.querySelectorAll('.gallery-item');
-        const prevBtn = container.querySelector('.prev-btn');
-        const nextBtn = container.querySelector('.next-btn');
-        const counter = container.querySelector('.gallery-counter');
-        
-        const totalItems = items.length;
-        let currentIndex = 0;
+    function buildProjects(projectsData) {
+        // Loop through each project in the JSON
+        for (const [projectId, items] of Object.entries(projectsData)) {
+            const container = document.querySelector(`.gallery-container[data-project="${projectId}"]`);
+            if (!container) continue;
 
-        // Setup the initial counter text
-        if (counter && totalItems > 0) {
-            counter.textContent = `(1 of ${totalItems})`;
+            items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `gallery-item ${index === 0 ? 'active' : ''}`;
+
+                if (item.type === 'image') {
+                    div.innerHTML = `
+                        <img src="${item.src}" alt="${item.caption}">
+                        <p class="gallery-caption">${item.caption}</p>
+                    `;
+                } else if (item.type === 'text') {
+                    div.classList.add('text-item');
+                    // Join multiple lines of poetry/text into paragraphs
+                    const paragraphs = item.lines.map(line => `<p>${line}</p>`).join('');
+                    div.innerHTML = `<div class="poem-block">${paragraphs}</div>`;
+                }
+                
+                container.appendChild(div);
+            });
         }
+    }
 
-        // Hide controls entirely if the gallery only has 1 image
-        if (totalItems <= 1) {
-            const controls = container.querySelector('.gallery-controls');
-            if (controls) controls.style.display = 'none';
-            return;
-        }
+    function buildBlog(blogData) {
+        const blogContainer = document.getElementById('blog-content');
+        if (!blogContainer) return;
 
-        function showItem(index) {
-            items.forEach(item => item.classList.remove('active'));
-            items[index].classList.add('active');
+        blogData.forEach(post => {
+            const article = document.createElement('article');
+            article.className = 'blog-post';
             
-            // Update counter text
-            if (counter) {
-                counter.textContent = `(${index + 1} of ${totalItems})`;
+            // Allow multiple paragraphs of text per blog post
+            const paragraphsHtml = post.paragraphs.map(p => `<p>${p}</p>`).join('');
+            
+            article.innerHTML = `
+                <span class="blog-date">${post.date}</span>
+                <h2>${post.title}</h2>
+                <img src="${post.image}" alt="${post.title}">
+                ${paragraphsHtml}
+            `;
+            blogContainer.appendChild(article);
+        });
+    }
+
+    // --- 4. Gallery Next/Prev Logic ---
+    function initGalleries() {
+        const galleryContainers = document.querySelectorAll('.gallery-container');
+
+        galleryContainers.forEach(container => {
+            const items = container.querySelectorAll('.gallery-item');
+            const prevBtn = container.querySelector('.prev-btn');
+            const nextBtn = container.querySelector('.next-btn');
+            const counter = container.querySelector('.gallery-counter');
+            
+            const totalItems = items.length;
+            let currentIndex = 0;
+
+            if (counter && totalItems > 0) {
+                counter.textContent = `(1 of ${totalItems})`;
             }
-        }
 
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalItems; // Loops back to start
-            showItem(currentIndex);
-        });
+            if (totalItems <= 1) {
+                const controls = container.querySelector('.gallery-controls');
+                if (controls) controls.style.display = 'none';
+                return;
+            }
 
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalItems) % totalItems; // Loops back to end
-            showItem(currentIndex);
+            function showItem(index) {
+                items.forEach(item => item.classList.remove('active'));
+                items[index].classList.add('active');
+                
+                if (counter) {
+                    counter.textContent = `(${index + 1} of ${totalItems})`;
+                }
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                showItem(currentIndex);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                showItem(currentIndex);
+            });
         });
-    });
+    }
 });

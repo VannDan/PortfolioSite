@@ -1,0 +1,69 @@
+{
+  "projects": {
+    "project-1": [
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 1 - 01: Morning mist over the valley."
+      },
+      {
+        "type": "text",
+        "lines": [
+          "The fog settled heavy,",
+          "quieting the morning rush,",
+          "a soft blanket over sharp stone."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 1 - 02: Hiking path elevation."
+      }
+    ],
+    "project-2": [
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 2 - 01: Urban geometry."
+      },
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 2 - 02: Glass reflections."
+      }
+    ],
+    "project-3": [
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 3 - Nature close-ups."
+      }
+    ],
+    "project-4": [
+      {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1470071131384-001b85755536?auto=format&fit=crop&w=1000&q=80",
+        "caption": "Project 4 - Evening light."
+      }
+    ]
+  },
+  "blog": [
+    {
+      "date": "September 24, 2026",
+      "title": "Shooting the Highlands",
+      "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80",
+      "paragraphs": [
+        "A recent trip to the mountains yielded some unexpected lighting conditions.",
+        "The heavy fog that rolled in just after dawn completely transformed the landscape, turning a familiar valley into something beautifully desolate."
+      ]
+    },
+    {
+      "date": "August 12, 2026",
+      "title": "New Print Series Available",
+      "image": "https://images.unsplash.com/photo-1506744626753-1fa30fd225a8?auto=format&fit=crop&w=1000&q=80",
+      "paragraphs": [
+        "I'm excited to announce that a new selection of large-format prints from the Coastal series is now available. Printed on archival cotton rag, these pieces are limited to editions of 10."
+      ]
+    }
+  ]
+}

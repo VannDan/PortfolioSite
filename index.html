@@ -8,13 +8,11 @@
 </head>
 <body>
 
-    <!-- Mobile Header -->
     <header class="mobile-header">
         <a href="#home" class="logo">Dan Vann</a>
         <button class="menu-toggle" id="menuToggle">&#9776;</button>
     </header>
 
-    <!-- Left Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
         <a href="#home" class="logo desktop-logo">Dan Vann</a>
         <nav>
@@ -28,50 +26,30 @@
         </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="content">
         
-        <!-- 1. Home / Splash Screen -->
         <section id="home" class="page active">
             <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=80" alt="Splash Image" class="splash-image">
         </section>
 
-        <!-- 2. Project 1 Gallery -->
+        <!-- Project 1 -->
         <section id="project-1" class="page">
-            <div class="gallery-container">
-                <!-- Controls now sit ABOVE the items -->
+            <div class="gallery-container" data-project="project-1">
                 <div class="gallery-controls">
                     <div class="nav-buttons">
                         <button class="prev-btn">Previous</button>
                         <span class="slash">/</span>
                         <button class="next-btn">Next</button>
                     </div>
-                    <span class="gallery-counter">(1 of 3)</span>
+                    <span class="gallery-counter"></span>
                 </div>
-
-                <div class="gallery-item active">
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80" alt="Project 1 Image 1">
-                    <p class="gallery-caption">Project 1 - 01: Morning mist over the valley.</p>
-                </div>
-                
-                <div class="gallery-item text-item">
-                    <div class="poem-block">
-                        <p>The fog settled heavy,</p>
-                        <p>quieting the morning rush,</p>
-                        <p>a soft blanket over sharp stone.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1000&q=80" alt="Project 1 Image 2">
-                    <p class="gallery-caption">Project 1 - 02: Hiking path elevation.</p>
-                </div>
+                <!-- JS will inject images here -->
             </div>
         </section>
 
-        <!-- 3. Project 2 Gallery -->
+        <!-- Project 2 -->
         <section id="project-2" class="page">
-            <div class="gallery-container">
+            <div class="gallery-container" data-project="project-2">
                 <div class="gallery-controls">
                     <div class="nav-buttons">
                         <button class="prev-btn">Previous</button>
@@ -80,21 +58,12 @@
                     </div>
                     <span class="gallery-counter"></span>
                 </div>
-
-                <div class="gallery-item active">
-                    <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1000&q=80" alt="Project 2 Image 1">
-                    <p class="gallery-caption">Project 2 - 01: Urban geometry.</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80" alt="Project 2 Image 2">
-                    <p class="gallery-caption">Project 2 - 02: Glass reflections.</p>
-                </div>
             </div>
         </section>
 
-        <!-- 4. Project 3 Gallery -->
+        <!-- Project 3 -->
         <section id="project-3" class="page">
-            <div class="gallery-container">
+            <div class="gallery-container" data-project="project-3">
                 <div class="gallery-controls">
                     <div class="nav-buttons">
                         <button class="prev-btn">Previous</button>
@@ -103,17 +72,12 @@
                     </div>
                     <span class="gallery-counter"></span>
                 </div>
-
-                <div class="gallery-item active">
-                    <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&w=1000&q=80" alt="Project 3 Image 1">
-                    <p class="gallery-caption">Project 3 - Nature close-ups.</p>
-                </div>
             </div>
         </section>
 
-        <!-- 5. Project 4 Gallery -->
+        <!-- Project 4 -->
         <section id="project-4" class="page">
-            <div class="gallery-container">
+            <div class="gallery-container" data-project="project-4">
                 <div class="gallery-controls">
                     <div class="nav-buttons">
                         <button class="prev-btn">Previous</button>
@@ -122,15 +86,9 @@
                     </div>
                     <span class="gallery-counter"></span>
                 </div>
-
-                <div class="gallery-item active">
-                    <img src="https://images.unsplash.com/photo-1470071131384-001b85755536?auto=format&fit=crop&w=1000&q=80" alt="Project 4 Image 1">
-                    <p class="gallery-caption">Project 4 - Evening light.</p>
-                </div>
             </div>
         </section>
 
-        <!-- 6. About Page -->
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-container">
@@ -145,22 +103,9 @@
             </div>
         </section>
 
-        <!-- 7. Blog Page -->
         <section id="blog" class="page">
-            <div class="blog-container">
-                <article class="blog-post">
-                    <span class="blog-date">September 24, 2026</span>
-                    <h2>Shooting the Highlands</h2>
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Blog Image 1">
-                    <p>A recent trip to the mountains yielded some unexpected lighting conditions. The heavy fog that rolled in just after dawn completely transformed the landscape, turning a familiar valley into something beautifully desolate.</p>
-                </article>
-
-                <article class="blog-post">
-                    <span class="blog-date">August 12, 2026</span>
-                    <h2>New Print Series Available</h2>
-                    <img src="https://images.unsplash.com/photo-1506744626753-1fa30fd225a8?auto=format&fit=crop&w=1000&q=80" alt="Blog Image 2">
-                    <p>I'm excited to announce that a new selection of large-format prints from the Coastal series is now available. Printed on archival cotton rag, these pieces are limited to editions of 10.</p>
-                </article>
+            <div class="blog-container" id="blog-content">
+                <!-- JS will inject blog posts here -->
             </div>
         </section>
 
