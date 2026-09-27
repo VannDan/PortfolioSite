@@ -1,29 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Dark Mode / Theme Toggle Logic ---
+   // --- 1. Dark Mode / Theme Toggle Logic ---
     const themeToggles = document.querySelectorAll('.theme-toggle');
     const body = document.body;
+
+    // This function chops the text intelligently based on the current theme
+    function updateLogoText(isDark) {
+        themeToggles.forEach(toggle => {
+            const staticPart = toggle.querySelector('.logo-static');
+            const defaultPart = toggle.querySelector('.logo-default');
+            const hoverPart = toggle.querySelector('.logo-hover');
+            
+            if (isDark) {
+                // If dark mode is on, we need all letters to change to "Light Mode?"
+                staticPart.textContent = '';
+                defaultPart.textContent = 'Dan Vann';
+                hoverPart.textContent = 'Light Mode?';
+            } else {
+                // If light mode is on, "Da" stays frozen
+                staticPart.textContent = 'Da';
+                defaultPart.textContent = 'n Vann';
+                hoverPart.textContent = 'rk Mode?';
+            }
+        });
+    }
 
     // Check if the user previously saved a theme preference
     if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('dark-mode');
-        document.querySelectorAll('.logo-hover').forEach(el => el.textContent = 'Light Mode?');
+        updateLogoText(true);
+    } else {
+        updateLogoText(false);
     }
 
     themeToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevents the link from reloading the page
+            e.preventDefault(); 
             
             body.classList.toggle('dark-mode');
             const isDark = body.classList.contains('dark-mode');
             
-            // Save the preference so it remembers on their next visit
+            // Save preference and update the chopped text
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            
-            // Smart text swap
-            document.querySelectorAll('.logo-hover').forEach(el => {
-                el.textContent = isDark ? 'Light Mode?' : 'Dark Mode?';
-            });
+            updateLogoText(isDark);
         });
     });
 
