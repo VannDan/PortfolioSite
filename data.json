@@ -36,16 +36,8 @@
       {
         "type": "image",
         "src": "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&w=1000&q=80",
-        "caption": "Project 3 - Nature close-ups"
-      },
-      {
-        "type": "text",
-        "lines": [
-          "The TEST settled heavy,",
-          "quieting the morning rush,",
-          "a soft blanket over sharp stone."
-        ]
-      },
+        "caption": "Project 3 - Nature close-ups."
+      }
     ],
     "project-4": [
       {
