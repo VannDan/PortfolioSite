@@ -1,7 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Page Navigation Logic ---
+    // --- 1. Mobile Menu Logic ---
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
     const navLinks = document.querySelectorAll('nav a, .logo');
+
+    // Toggle menu
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+
+    // Close menu when a link is clicked (for mobile)
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+    });
+
+    // --- 2. Page Navigation Logic ---
     const pages = document.querySelectorAll('.page');
 
     function navigateToHash() {
@@ -18,48 +34,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Highlight active link in the sidebar
-        const activeLink = document.querySelector(`a[href="${hash}"]`);
-        if (activeLink && !activeLink.classList.contains('logo')) {
-            activeLink.classList.add('active');
-        }
+        const activeLinks = document.querySelectorAll(`a[href="${hash}"]`);
+        activeLinks.forEach(link => {
+            if (!link.classList.contains('logo')) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Scroll to top on page change
+        window.scrollTo(0, 0);
     }
 
-    // Listen for URL hash changes (when user clicks links or uses browser back button)
     window.addEventListener('hashchange', navigateToHash);
-    
-    // Trigger on first load
     navigateToHash();
 
-
-    // --- 2. Gallery Next/Prev Logic ---
+    // --- 3. Gallery Next/Prev Logic ---
     const galleryContainers = document.querySelectorAll('.gallery-container');
 
     galleryContainers.forEach(container => {
         const items = container.querySelectorAll('.gallery-item');
         const prevBtn = container.querySelector('.prev-btn');
         const nextBtn = container.querySelector('.next-btn');
+        const counter = container.querySelector('.gallery-counter');
         
+        const totalItems = items.length;
         let currentIndex = 0;
 
-        // Hide buttons if gallery only has 1 image
-        if (items.length <= 1) {
-            if (prevBtn) prevBtn.style.display = 'none';
-            if (nextBtn) nextBtn.style.display = 'none';
+        // Setup the initial counter text
+        if (counter && totalItems > 0) {
+            counter.textContent = `(1 of ${totalItems})`;
+        }
+
+        // Hide controls entirely if the gallery only has 1 image
+        if (totalItems <= 1) {
+            const controls = container.querySelector('.gallery-controls');
+            if (controls) controls.style.display = 'none';
             return;
         }
 
         function showItem(index) {
             items.forEach(item => item.classList.remove('active'));
             items[index].classList.add('active');
+            
+            // Update counter text
+            if (counter) {
+                counter.textContent = `(${index + 1} of ${totalItems})`;
+            }
         }
 
         nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length; // Loops back to start
+            currentIndex = (currentIndex + 1) % totalItems; // Loops back to start
             showItem(currentIndex);
         });
 
         prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length; // Loops back to end
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems; // Loops back to end
             showItem(currentIndex);
         });
     });
