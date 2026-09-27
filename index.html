@@ -9,12 +9,20 @@
 <body>
 
     <header class="mobile-header">
-        <a href="#home" class="logo">Dan Vann</a>
+        <!-- Logo acts as theme toggle now -->
+        <a href="#" class="logo theme-toggle">
+            <span class="logo-default">Dan Vann</span>
+            <span class="logo-hover">Dark Mode?</span>
+        </a>
         <button class="menu-toggle" id="menuToggle">&#9776;</button>
     </header>
 
     <aside class="sidebar" id="sidebar">
-        <a href="#home" class="logo desktop-logo">Dan Vann</a>
+        <!-- Logo acts as theme toggle now -->
+        <a href="#" class="logo desktop-logo theme-toggle">
+            <span class="logo-default">Dan Vann</span>
+            <span class="logo-hover">Dark Mode?</span>
+        </a>
         <nav>
             <a href="#home" class="nav-link active">Home</a>
             <a href="#project-1" class="nav-link">Project 01</a>
@@ -43,7 +51,6 @@
                     </div>
                     <span class="gallery-counter"></span>
                 </div>
-                <!-- JS will inject images here -->
             </div>
         </section>
 
@@ -105,7 +112,6 @@
 
         <section id="blog" class="page">
             <div class="blog-container" id="blog-content">
-                <!-- JS will inject blog posts here -->
             </div>
         </section>
 

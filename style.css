@@ -1,3 +1,29 @@
+/* --- Color Variables (The Theme Engine) --- */
+:root {
+    --bg-color: #F9F9F8;
+    --text-main: #333333;
+    --text-muted: #888888;
+    --text-light: #aaaaaa;
+    --poem-text: #444444;
+    --caption-text: #555555;
+    --slash-color: #cccccc;
+    --shadow-color: rgba(0,0,0,0.05);
+    --shadow-heavy: rgba(0,0,0,0.1);
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+    --bg-color: #161616; /* Deep charcoal, better than pure black */
+    --text-main: #f0f0f0;
+    --text-muted: #888888;
+    --text-light: #666666;
+    --poem-text: #cccccc;
+    --caption-text: #aaaaaa;
+    --slash-color: #444444;
+    --shadow-color: rgba(0,0,0,0.5);
+    --shadow-heavy: rgba(0,0,0,0.8);
+}
+
 /* Core Styling & Clean Reset */
 * {
     margin: 0;
@@ -6,11 +32,12 @@
 }
 
 body {
-    background-color: #F9F9F8; 
+    background-color: var(--bg-color); 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #333; /* Softened from #222 */
+    color: var(--text-main); 
     display: flex;
     min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth fade when switching themes */
 }
 
 /* Mobile Header (Hidden by default) */
@@ -20,12 +47,13 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #F9F9F8;
+    background-color: var(--bg-color);
     padding: 15px 20px;
     z-index: 999;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 5px var(--shadow-color);
+    transition: background-color 0.4s ease;
 }
 
 .menu-toggle {
@@ -33,7 +61,7 @@ body {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: #333; /* Softened */
+    color: var(--text-main);
 }
 
 /* Sidebar Navigation */
@@ -46,21 +74,34 @@ body {
     display: flex;
     flex-direction: column;
     padding: 50px 40px;
-    background-color: #F9F9F8;
+    background-color: var(--bg-color);
     z-index: 1000;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.4s ease;
 }
 
+/* Logo & Hover Logic */
 .logo {
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: 1px;
     text-decoration: none;
-    color: #333; /* Softened */
+    color: var(--text-main);
 }
 
 .desktop-logo {
     margin-bottom: 60px;
+}
+
+.logo .logo-hover {
+    display: none;
+}
+
+.logo:hover .logo-default {
+    display: none;
+}
+
+.logo:hover .logo-hover {
+    display: inline;
 }
 
 nav {
@@ -71,13 +112,13 @@ nav {
 
 .nav-link {
     text-decoration: none;
-    color: #888;
+    color: var(--text-muted);
     font-size: 1rem;
     transition: color 0.3s ease;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: #333; /* Softened */
+    color: var(--text-main);
 }
 
 /* Main Content Area */
@@ -120,47 +161,46 @@ nav {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Left aligns everything */
-    justify-content: flex-start; /* Stops the vertical jumping */
-    padding: 12vh 40px 40px 40px; /* Pushes content down from the top */
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12vh 40px 40px 40px;
     position: relative;
 }
 
-/* New Gallery Controls Layout */
 .gallery-controls {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Left aligned */
-    gap: 12px; /* Tighter spacing between buttons and counter */
-    margin-bottom: 25px; /* Space between controls and image */
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
 .nav-buttons {
     display: flex;
     align-items: center;
-    gap: 6px; /* Tighter spacing between Previous / Next */
+    gap: 6px;
 }
 
 .slash {
-    color: #ccc;
+    color: var(--slash-color);
 }
 
 button {
     background: transparent;
     border: none;
-    color: #333; /* Softened */
+    color: var(--text-main);
     font-size: 1rem;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 button:hover {
-    color: #888;
+    color: var(--text-muted);
 }
 
 .gallery-counter {
-    color: #aaa;
+    color: var(--text-light);
     font-weight: 300;
     font-size: 0.9rem;
 }
@@ -177,17 +217,16 @@ button:hover {
 
 .gallery-item img {
     max-width: 100%;
-    max-height: 70vh; /* Reduced slightly to account for top padding */
+    max-height: 70vh;
     object-fit: contain;
     margin-bottom: 15px;
 }
 
 .gallery-caption {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--caption-text);
 }
 
-/* Text / Poem block styling */
 .text-item {
     display: none;
 }
@@ -200,7 +239,7 @@ button:hover {
     text-align: left;
     font-size: 1.25rem;
     line-height: 2;
-    color: #444; /* Softened */
+    color: var(--poem-text);
     max-width: 500px;
 }
 
@@ -234,16 +273,16 @@ button:hover {
 
 .about-text p {
     line-height: 1.8;
-    color: #444; /* Softened */
+    color: var(--poem-text);
     margin-bottom: 20px;
 }
 
 .contact-link {
     display: inline-block;
     margin-top: 20px;
-    color: #333; /* Softened */
+    color: var(--text-main);
     text-decoration: none;
-    border-bottom: 1px solid #333; /* Softened */
+    border-bottom: 1px solid var(--text-main);
     padding-bottom: 2px;
 }
 
@@ -261,7 +300,7 @@ button:hover {
 .blog-date {
     display: block;
     font-size: 0.9rem;
-    color: #999;
+    color: var(--text-muted);
     margin-bottom: 15px;
 }
 
@@ -280,71 +319,22 @@ button:hover {
 
 .blog-post p {
     line-height: 1.8;
-    color: #444; /* Softened */
+    color: var(--poem-text);
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 850px) {
-    .mobile-header {
-        display: flex;
-    }
-    
-    .content {
-        margin-left: 0;
-        width: 100%;
-        padding-top: 60px;
-    }
-
-    .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-        box-shadow: 2px 0 15px rgba(0,0,0,0.1);
-    }
-
-    .desktop-logo {
-        display: none;
-    }
-
-    .nav-link {
-        font-size: 1.25rem;
-    }
-
-    .gallery-container {
-        height: auto;
-        padding: 20px;
-        display: block;
-    }
-
-    .gallery-item {
-        display: block !important;
-        margin-bottom: 60px;
-    }
-
-    .gallery-item img {
-        max-height: none;
-        height: auto;
-    }
-    
-    .text-item {
-        height: auto;
-        display: block !important;
-        padding: 40px 0;
-    }
-
-    .gallery-controls {
-        display: none !important;
-    }
-
-    .about-container {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .about-container img {
-        width: 100%;
-        height: auto;
-    }
+    .mobile-header { display: flex; }
+    .content { margin-left: 0; width: 100%; padding-top: 60px; }
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: 2px 0 15px var(--shadow-heavy); }
+    .desktop-logo { display: none; }
+    .nav-link { font-size: 1.25rem; }
+    .gallery-container { height: auto; padding: 20px; display: block; }
+    .gallery-item { display: block !important; margin-bottom: 60px; }
+    .gallery-item img { max-height: none; height: auto; }
+    .text-item { height: auto; display: block !important; padding: 40px 0; }
+    .gallery-controls { display: none !important; }
+    .about-container { flex-direction: column; gap: 30px; }
+    .about-container img { width: 100%; height: auto; }
 }
