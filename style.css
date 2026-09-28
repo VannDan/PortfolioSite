@@ -212,12 +212,12 @@ nav {
 
 /* Splash Screen Styling */
 #home {
-    padding: 40vh;
+    padding: 20vh;
 }
 
 .splash-image {
     width: 100%;
-    height: 100vh;
+    height: 60vh;
     object-fit: cover;
     display: block;
 }
