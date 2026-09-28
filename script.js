@@ -1,55 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-   // --- 1. Dark Mode / Theme Toggle Logic ---
-    const themeToggles = document.querySelectorAll('.theme-toggle');
+    // --- 1. Dark Mode / Theme Toggle Logic ---
+    const desktopToggles = document.querySelectorAll('.theme-toggle');
+    const mobileToggle = document.querySelector('.mobile-theme-toggle');
     const body = document.body;
 
-    // This function chops the text intelligently based on the current theme
-    function updateLogoText(isDark) {
-        themeToggles.forEach(toggle => {
+    function updateThemeUI(isDark) {
+        // Update Desktop Logo Text
+        desktopToggles.forEach(toggle => {
             const staticPart = toggle.querySelector('.logo-static');
             const defaultPart = toggle.querySelector('.logo-default');
             const hoverPart = toggle.querySelector('.logo-hover');
             
             if (isDark) {
-                // If dark mode is on, we need all letters to change to "Light Mode?"
                 staticPart.textContent = '';
                 defaultPart.textContent = 'Dan Vann';
                 hoverPart.textContent = 'Light Mode?';
             } else {
-                // If light mode is on, "Da" stays frozen
                 staticPart.textContent = 'Da';
                 defaultPart.textContent = 'n Vann';
                 hoverPart.textContent = 'rk Mode?';
             }
         });
+
+        // Update Mobile Menu Text
+        if (mobileToggle) {
+            mobileToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        }
     }
 
-    // Check if the user previously saved a theme preference
     if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('dark-mode');
-        updateLogoText(true);
+        updateThemeUI(true);
     } else {
-        updateLogoText(false);
+        updateThemeUI(false);
     }
 
-    themeToggles.forEach(toggle => {
-        toggle.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
-            
-            // Save preference and update the chopped text
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            updateLogoText(isDark);
-        });
-    });
+    function handleToggle(e) {
+        e.preventDefault(); 
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateThemeUI(isDark);
+    }
+
+    desktopToggles.forEach(toggle => toggle.addEventListener('click', handleToggle));
+    if (mobileToggle) mobileToggle.addEventListener('click', handleToggle);
+
 
     // --- 2. Mobile Menu Logic ---
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    const navLinks = document.querySelectorAll('nav a'); // No longer includes logo
+    
+    // We intentionally exclude the theme toggle so clicking it doesn't navigate away or close the menu
+    const navLinks = document.querySelectorAll('nav a:not(.mobile-theme-toggle)'); 
 
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
