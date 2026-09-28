@@ -143,6 +143,11 @@ nav {
     color: var(--text-main);
 }
 
+/* Hide the mobile toggle on desktop screens */
+.mobile-theme-toggle {
+    display: none;
+}
+
 /* Main Content Area */
 .content {
     margin-left: 280px;
@@ -359,4 +364,10 @@ button:hover {
     .gallery-controls { display: none !important; }
     .about-container { flex-direction: column; gap: 30px; }
     .about-container img { width: 100%; height: auto; }
+    .mobile-theme-toggle {
+        display: block;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--shadow-heavy);
+    }
 }
