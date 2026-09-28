@@ -1,9 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Mobile Menu Logic ---
+   // --- 1. Dark Mode / Theme Toggle Logic ---
+    const themeToggles = document.querySelectorAll('.theme-toggle');
+    const body = document.body;
+
+    // This function chops the text intelligently based on the current theme
+    function updateLogoText(isDark) {
+        themeToggles.forEach(toggle => {
+            const staticPart = toggle.querySelector('.logo-static');
+            const defaultPart = toggle.querySelector('.logo-default');
+            const hoverPart = toggle.querySelector('.logo-hover');
+            
+            if (isDark) {
+                // If dark mode is on, we need all letters to change to "Light Mode?"
+                staticPart.textContent = '';
+                defaultPart.textContent = 'Dan Vann';
+                hoverPart.textContent = 'Light Mode?';
+            } else {
+                // If light mode is on, "Da" stays frozen
+                staticPart.textContent = 'Da';
+                defaultPart.textContent = 'n Vann';
+                hoverPart.textContent = 'rk Mode?';
+            }
+        });
+    }
+
+    // Check if the user previously saved a theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        updateLogoText(true);
+    } else {
+        updateLogoText(false);
+    }
+
+    themeToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            
+            // Save preference and update the chopped text
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateLogoText(isDark);
+        });
+    });
+
+    // --- 2. Mobile Menu Logic ---
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    const navLinks = document.querySelectorAll('nav a, .logo');
+    const navLinks = document.querySelectorAll('nav a'); // No longer includes logo
 
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
@@ -15,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 2. Page Navigation Logic ---
+    // --- 3. Page Navigation Logic ---
     const pages = document.querySelectorAll('.page');
 
     function navigateToHash() {
@@ -30,11 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const activeLinks = document.querySelectorAll(`a[href="${hash}"]`);
-        activeLinks.forEach(link => {
-            if (!link.classList.contains('logo')) {
-                link.classList.add('active');
-            }
-        });
+        activeLinks.forEach(link => link.classList.add('active'));
         
         window.scrollTo(0, 0);
     }
@@ -42,18 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('hashchange', navigateToHash);
     navigateToHash();
 
-    // --- 3. Fetch Data & Build Website ---
+    // --- 4. Fetch Data & Build Website ---
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
             buildProjects(data.projects);
             buildBlog(data.blog);
-            initGalleries(); // Turn on the gallery buttons AFTER the images load
+            initGalleries();
         })
         .catch(error => console.error('Error loading data:', error));
 
     function buildProjects(projectsData) {
-        // Loop through each project in the JSON
         for (const [projectId, items] of Object.entries(projectsData)) {
             const container = document.querySelector(`.gallery-container[data-project="${projectId}"]`);
             if (!container) continue;
@@ -69,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                 } else if (item.type === 'text') {
                     div.classList.add('text-item');
-                    // Join multiple lines of poetry/text into paragraphs
                     const paragraphs = item.lines.map(line => `<p>${line}</p>`).join('');
                     div.innerHTML = `<div class="poem-block">${paragraphs}</div>`;
                 }
@@ -87,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const article = document.createElement('article');
             article.className = 'blog-post';
             
-            // Allow multiple paragraphs of text per blog post
             const paragraphsHtml = post.paragraphs.map(p => `<p>${p}</p>`).join('');
             
             article.innerHTML = `
@@ -100,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 4. Gallery Next/Prev Logic ---
+    // --- 5. Gallery Next/Prev Logic ---
     function initGalleries() {
         const galleryContainers = document.querySelectorAll('.gallery-container');
 
