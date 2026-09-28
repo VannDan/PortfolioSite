@@ -9,18 +9,15 @@
 <body>
 
     <header class="mobile-header">
-        <!-- Mobile Header Logo -->
-        <a href="#" class="logo theme-toggle">
-            <span class="logo-static">Da</span><span class="logo-anim">
-                <span class="logo-default">n Vann</span>
-                <span class="logo-hover">rk Mode?</span>
-            </span>
-        </a>
-        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <a href="#home" class="logo">Dan Vann</a>
+        <button class="menu-toggle" id="menuToggle">
+            <span class="icon-burger">&#9776;</span>
+            <span class="icon-close">&times;</span>
+        </button>
     </header>
 
     <aside class="sidebar" id="sidebar">
-        <!-- Sidebar Navigation Logo -->
+        <!-- Desktop Logo with Hover Animation -->
         <a href="#" class="logo desktop-logo theme-toggle">
             <span class="logo-static">Da</span><span class="logo-anim">
                 <span class="logo-default">n Vann</span>
@@ -35,6 +32,14 @@
             <a href="#project-4" class="nav-link">Project 04</a>
             <a href="#about" class="nav-link">About</a>
             <a href="#blog" class="nav-link">Blog</a>
+            
+            <!-- Mobile-only Animated Theme Switch -->
+            <div class="mobile-theme-container" id="mobileThemeToggle">
+                <span>Dark Mode</span>
+                <div class="theme-switch">
+                    <div class="switch-knob"></div>
+                </div>
+            </div>
         </nav>
     </aside>
 
