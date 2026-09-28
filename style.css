@@ -389,7 +389,7 @@ button:hover {
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 850px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse) {
     .mobile-header { display: flex; }
     .content { margin-left: 0; width: 100%; padding-top: 60px; }
     
