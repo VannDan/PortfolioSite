@@ -12,14 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const defaultPart = toggle.querySelector('.logo-default');
             const hoverPart = toggle.querySelector('.logo-hover');
             
-            if (isDark) {
-                staticPart.textContent = '';
-                defaultPart.textContent = 'Dan Vann';
-                hoverPart.textContent = 'Light Mode?';
-            } else {
-                staticPart.textContent = 'Da';
-                defaultPart.textContent = 'n Vann';
-                hoverPart.textContent = 'rk Mode?';
+            if (staticPart && defaultPart && hoverPart) {
+                if (isDark) {
+                    staticPart.textContent = '';
+                    defaultPart.textContent = 'Dan Vann';
+                    hoverPart.textContent = 'Light Mode?';
+                } else {
+                    staticPart.textContent = 'Da';
+                    defaultPart.textContent = 'n Vann';
+                    hoverPart.textContent = 'rk Mode?';
+                }
             }
         });
 
@@ -52,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     
-    // We intentionally exclude the theme toggle so clicking it doesn't navigate away or close the menu
     const navLinks = document.querySelectorAll('nav a:not(.mobile-theme-toggle)'); 
 
     menuToggle.addEventListener('click', () => {

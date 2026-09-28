@@ -13,7 +13,7 @@
 
 /* Dark Mode Overrides */
 body.dark-mode {
-    --bg-color: #161616; /* Deep charcoal, better than pure black */
+    --bg-color: #161616;
     --text-main: #f0f0f0;
     --text-muted: #888888;
     --text-light: #666666;
@@ -37,7 +37,7 @@ body {
     color: var(--text-main); 
     display: flex;
     min-height: 100vh;
-    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth fade when switching themes */
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Mobile Header (Hidden by default) */
@@ -79,14 +79,14 @@ body {
     transition: transform 0.3s ease, background-color 0.4s ease;
 }
 
-/* Logo & Hover Logic */
+/* Logo & Hover Logic (Desktop) */
 .logo {
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: 1px;
     text-decoration: none;
     color: var(--text-main);
-    display: inline-flex; /* Keeps the static and animated text perfectly aligned side-by-side */
+    display: inline-flex;
 }
 
 .desktop-logo {
@@ -95,7 +95,7 @@ body {
 
 .logo-anim {
     display: inline-grid;
-    overflow: hidden; /* Hides the rolling letters before they slide up */
+    overflow: hidden;
 }
 
 .logo-anim span {
@@ -103,7 +103,6 @@ body {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Default state (Not hovering) */
 .logo-anim .logo-default {
     opacity: 1;
     transform: translateY(0);
@@ -115,7 +114,6 @@ body {
     pointer-events: none;
 }
 
-/* Hover state (Mouse is over the logo) */
 .logo:hover .logo-default {
     opacity: 0;
     transform: translateY(-15px);
@@ -126,6 +124,7 @@ body {
     transform: translateY(0);
 }
 
+/* Navigation Links */
 nav {
     display: flex;
     flex-direction: column;
@@ -171,7 +170,7 @@ nav {
     to { opacity: 1; }
 }
 
-/* 1. Splash Screen Styling */
+/* Splash Screen Styling */
 #home {
     padding: 0;
 }
@@ -353,17 +352,23 @@ button:hover {
 @media (max-width: 850px) {
     .mobile-header { display: flex; }
     .content { margin-left: 0; width: 100%; padding-top: 60px; }
+    
     .sidebar { transform: translateX(-100%); }
     .sidebar.open { transform: translateX(0); box-shadow: 2px 0 15px var(--shadow-heavy); }
+    
     .desktop-logo { display: none; }
     .nav-link { font-size: 1.25rem; }
+    
     .gallery-container { height: auto; padding: 20px; display: block; }
     .gallery-item { display: block !important; margin-bottom: 60px; }
     .gallery-item img { max-height: none; height: auto; }
     .text-item { height: auto; display: block !important; padding: 40px 0; }
     .gallery-controls { display: none !important; }
+    
     .about-container { flex-direction: column; gap: 30px; }
     .about-container img { width: 100%; height: auto; }
+
+    /* Reveal the mobile toggle inside the sidebar */
     .mobile-theme-toggle {
         display: block;
         margin-top: 20px;
