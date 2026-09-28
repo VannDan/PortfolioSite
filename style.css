@@ -56,12 +56,52 @@ body {
     transition: background-color 0.4s ease;
 }
 
+/* Updated Menu Button Animation */
 .menu-toggle {
     background: none;
     border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
     color: var(--text-main);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease; /* Slides the button left */
+}
+
+.icon-burger, .icon-close {
+    position: absolute;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.icon-burger {
+    font-size: 1.5rem;
+    opacity: 1;
+    transform: rotate(0);
+}
+
+.icon-close {
+    font-size: 2rem;
+    line-height: 1;
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+/* When the menu is open, move the button and morph the icon */
+.menu-toggle.open {
+    transform: translateX(-280px); /* Pushes it across alongside the menu edge */
+}
+
+.menu-toggle.open .icon-burger {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.menu-toggle.open .icon-close {
+    opacity: 1;
+    transform: rotate(0);
 }
 
 /* Sidebar Navigation */
@@ -76,7 +116,7 @@ body {
     padding: 50px 40px;
     background-color: var(--bg-color);
     z-index: 1000;
-    transition: transform 0.3s ease, background-color 0.4s ease;
+    transition: transform 0.4s ease, background-color 0.4s ease;
 }
 
 /* Logo & Hover Logic (Desktop) */
@@ -142,8 +182,8 @@ nav {
     color: var(--text-main);
 }
 
-/* Hide the mobile toggle on desktop screens */
-.mobile-theme-toggle {
+/* Mobile Theme Container (Hidden on Desktop) */
+.mobile-theme-container {
     display: none;
 }
 
@@ -353,8 +393,9 @@ button:hover {
     .mobile-header { display: flex; }
     .content { margin-left: 0; width: 100%; padding-top: 60px; }
     
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); box-shadow: 2px 0 15px var(--shadow-heavy); }
+    /* Menu comes from the right side now */
+    .sidebar { left: auto; right: 0; transform: translateX(100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: -2px 0 15px var(--shadow-heavy); }
     
     .desktop-logo { display: none; }
     .nav-link { font-size: 1.25rem; }
@@ -368,11 +409,44 @@ button:hover {
     .about-container { flex-direction: column; gap: 30px; }
     .about-container img { width: 100%; height: auto; }
 
-    /* Reveal the mobile toggle inside the sidebar */
-    .mobile-theme-toggle {
-        display: block;
+    /* The new animated mobile toggle switch */
+    .mobile-theme-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-top: 20px;
         padding-top: 20px;
         border-top: 1px solid var(--shadow-heavy);
+        color: var(--text-muted);
+        cursor: pointer;
+    }
+    
+    .theme-switch {
+        width: 50px;
+        height: 26px;
+        background-color: var(--slash-color);
+        border-radius: 13px;
+        position: relative;
+        transition: background-color 0.4s ease;
+    }
+    
+    body.dark-mode .theme-switch {
+        background-color: var(--text-main);
+    }
+    
+    .switch-knob {
+        width: 22px;
+        height: 22px;
+        background-color: var(--bg-color);
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.4s ease, background-color 0.4s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    body.dark-mode .switch-knob {
+        transform: translateX(24px);
     }
 }

@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. Dark Mode / Theme Toggle Logic ---
     const desktopToggles = document.querySelectorAll('.theme-toggle');
-    const mobileToggle = document.querySelector('.mobile-theme-toggle');
+    const mobileToggle = document.getElementById('mobileThemeToggle');
     const body = document.body;
 
     function updateThemeUI(isDark) {
-        // Update Desktop Logo Text
+        // Desktop Logo Text Update
         desktopToggles.forEach(toggle => {
             const staticPart = toggle.querySelector('.logo-static');
             const defaultPart = toggle.querySelector('.logo-default');
@@ -24,13 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
-        // Update Mobile Menu Text
-        if (mobileToggle) {
-            mobileToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-        }
+        // The mobile switch now animates purely via CSS classes!
     }
 
+    // Check for saved preference
     if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('dark-mode');
         updateThemeUI(true);
@@ -46,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateThemeUI(isDark);
     }
 
+    // Apply the listeners
     desktopToggles.forEach(toggle => toggle.addEventListener('click', handleToggle));
     if (mobileToggle) mobileToggle.addEventListener('click', handleToggle);
 
@@ -54,15 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     
-    const navLinks = document.querySelectorAll('nav a:not(.mobile-theme-toggle)'); 
+    // We only attach close clicks to ACTUAL links, so the toggle switch doesn't accidentally close the menu
+    const navLinks = document.querySelectorAll('nav a'); 
 
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
+        menuToggle.classList.toggle('open'); // This triggers the button animation in CSS
     });
 
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             sidebar.classList.remove('open');
+            menuToggle.classList.remove('open');
         });
     });
 
